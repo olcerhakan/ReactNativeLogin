@@ -41,28 +41,30 @@ export default class Main extends Component {
                         underlineColorAndroid='transparent'>
                     </TextInput>
                 </View>
-                <TouchableOpacity onPress={ this.addNote.bind(this) } style={styles.addButton}>
+                <TouchableOpacity onPress={ ()=> this.addNote() } style={styles.addButton}>
                     <Text style={styles.addButtonText}>+</Text>
                 </TouchableOpacity>
             </View>
         );
     }
     addNote(){
-        if(this.state.noteText){
+        const { noteArray, noteText } = this.state;
+        if(noteText){
             var d = new Date();
-            this.state.noteArray.push({
+            noteArray.push({
                 'date':d.getFullYear()+
                 "/"+(d.getMonth()+1) +
                 "/"+ d.getDate(),
-                'note': this.state.noteText
-            });
-            this.setState({ noteArray: this.state.noteArray });
+                'note': noteText
+            })
+            this.setState({ noteArray });
             this.setState({noteText:''});
         }
     }
     deleteNote(key){
-        this.state.noteArray.splice(key, 1);
-        this.setState({noteArray: this.state.noteArray});
+        const { noteArray } = this.state;
+        noteArray.splice(key, 1);
+        this.setState({ noteArray });
     }
 }
 const styles = StyleSheet.create({
